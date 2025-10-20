@@ -16,8 +16,9 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		lazy = false,
+		dependencies = { "saghen/blink.cmp" },
 		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			-- Configure servers using vim.lsp.config
 			for _, server in ipairs({ "ts_ls", "solargraph", "html", "lua_ls" }) do
@@ -26,7 +27,7 @@ return {
 				})
 				vim.lsp.enable(server)
 			end
-
+			vim.keymap.set("n", "<leader>k", vim.diagnostic.open_float, {})
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
